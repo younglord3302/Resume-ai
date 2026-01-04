@@ -1,314 +1,85 @@
-# AI Resume Analyzer 🧠📄
+# AI Resume Analyzer
 
-An AI-assisted **ATS-style resume analyzer** built with a modern full-stack stack.
+An intelligent resume analysis tool that uses AI to score resumes against job descriptions, identifying key strengths and missing keywords to help users improve their ATS (Applicant Tracking System) ranking.
 
-Upload your resume (PDF/DOCX/TXT) and paste a job description to get:
+## Features
+- **AI-Powered Analysis**: Scores resumes based on keyword matching, readability, and section completeness.
+- **ATS Score**: detailed breakdown of match percentage.
+- **Keyword Gap Analysis**: Identifies missing critical skills/keywords from the job description.
+- **Modern UI**: Built with React, Tailwind CSS v4, and Framer Motion for a premium glassmorphism aesthetic.
+- **Authentication**: User accounts to save progress (JWT-based).
+- **Admin Dashboard**: Analytics for platform usage.
 
-- An **ATS-style score** (0–100)
-- **Skill match vs job description**
-- **Skill gaps** (missing skills)
-- **Score breakdown** (keywords, sections, format, readability)
-- **Actionable suggestions** to improve your resume
+## Tech Stack
+- **Frontend**: React (Vite), TypeScript, Tailwind CSS, Lucide Icons, Axios.
+- **Backend**: Node.js, Express, MongoDB (Mongoose), JWT, PDF/Docx Parsing.
+- **Deployment**: Vercel (Frontend & Backend).
 
-Perfect for job seekers who want to tailor their resume to specific roles, and a great portfolio project to showcase full-stack + ATS-style logic skills.
-
----
-
-## ✨ Features
-
-### Core Functionality
-
-- ✅ **Resume Upload**
-  - Supports **PDF**, **DOCX**, **TXT**
-  - Uses `pdf-parse` and `mammoth` to extract text
-  - 5MB file size limit with clear error messages
-
-- ✅ **Text Input**
-  - Paste raw resume text if you don't want to upload files
-  - Works side-by-side with file upload (shared `/api/analyze` endpoint)
-
-- ✅ **Job Description Input**
-  - Paste full job descriptions from job portals
-  - Engine compares resume vs JD for alignment
-
-- ✅ **ATS-Style Scoring**
-  - **Total score (0–100)** with weighted components:
-    - 50% – **Keyword match**
-    - 20% – **Section completeness**
-    - 15% – **Formatting**
-    - 15% – **Readability**
-
-### Analysis Engine
-
-- 🔍 **Keyword Analysis**
-  - Extracts skills from JD & resume using a skills dictionary
-  - Computes coverage (% of JD skills present in resume)
-  - Returns **matched skills** and **missing skills**
-
-- 🧩 **Section Detection**
-  - Detects presence of:
-    - Summary / Profile
-    - Skills
-    - Experience
-    - Projects
-    - Education
-  - Scores completeness and suggests missing sections
-
-- 🧱 **Format Analysis**
-  - Estimates:
-    - Character & word counts
-    - Bullet count
-    - Possible table/complex layout usage
-  - Penalizes overly short/long resumes and ATS-unfriendly patterns
-
-- 📚 **Readability Scoring**
-  - Counts sentences, words, and average sentence length
-  - Detects **action verbs** (Led, Built, Implemented, Improved, etc.)
-  - Scores clarity and impact-focused writing
-
-- 💡 **Suggestion Engine**
-  - Generates **context-aware suggestions** based on:
-    - Missing skills
-    - Missing sections
-    - Length & bullets
-    - Readability & action verbs
-  - Avoids generic "improve resume" advice and suggests specific fixes
-
-### UI / UX
-
-- 🎛️ **Score Breakdown Visualization**
-  - Radial bar chart showing:
-    - Keyword score
-    - Sections score
-    - Format score
-    - Readability score
-  - Built with `recharts`
-
-- 📊 **Skills Overview**
-  - Colored chips for:
-    - ✅ Matched skills
-    - ⚠️ Missing skills
-
-- 🧾 **Suggestions Panel**
-  - Scrollable list of concrete improvement tips
-
-- 📱 **Responsive Layout**
-  - Clean, modern design with Tailwind CSS
-  - Works on mobile, tablet, and desktop
-
----
-
-## 🧱 Tech Stack
-
-**Frontend**
-- React (Vite + TypeScript)
-- Tailwind CSS
-- React Router
-- Axios
-- Recharts (data visualization)
-
-**Backend**
-- Node.js + Express
-- TypeScript
-- Multer (file uploads)
-- pdf-parse (PDF text extraction)
-- mammoth (DOCX text extraction)
-- Helmet, CORS, dotenv
-
----
-
-## 🏗️ Project Structure
-
-```bash
-ai-resume-analyzer/
-  client/        # React frontend (Vite + TS)
-  server/        # Node + Express backend (TS)
-  shared/        # (optional) shared types in the future
-  README.md
-```
-
-**Backend (server)**
-
-```bash
-server/
-  src/
-    index.ts                 # Express app entrypoint
-    types/
-      analysis.ts            # Shared analysis-related TS types
-    services/
-      analyzeResume.ts       # Orchestrator, combines all services
-      keywordScore.ts        # JD/resume skill extraction & scoring
-      sectionScore.ts        # Section detection & scoring
-      formatScore.ts         # Format & length analysis
-      readabilityScore.ts    # Readability + action verbs
-      suggestionEngine.ts    # Suggestion generator
-      fileParsing.ts         # PDF/DOCX/TXT text extraction
-```
-
-**Frontend (client)**
-
-```bash
-client/
-  src/
-    main.tsx                 # Entry, Router setup
-    App.tsx                  # Layout & routes
-    pages/
-      LandingPage.tsx        # Marketing/intro page
-      AnalyzerPage.tsx       # Main analyzer UI (file upload + chart)
-```
-
----
-
-## 🚀 Getting Started (Local)
+## Getting Started
 
 ### Prerequisites
+- Node.js (v18+)
+- MongoDB (Local or Atlas)
 
-* Node.js (v18+ recommended)
-* npm or yarn
+### Installation
 
-### 1. Clone the repository
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/younglord3302/Resume-ai.git
+    cd Resume-ai
+    ```
 
-```bash
-git clone https://github.com/<your-username>/ai-resume-analyzer.git
-cd ai-resume-analyzer
-```
+2.  **Install dependencies**:
+    ```bash
+    # Client
+    cd client
+    npm install
 
-### 2. Backend Setup
+    # Server
+    cd ../server
+    npm install
+    ```
 
-```bash
-cd server
-npm install
-```
+3.  **Environment Setup**:
+    -   **Server**: Create `server/.env` based on `server/.env.example`.
+        ```env
+        MONGO_URI=mongodb://localhost:27017/ai-resume-analyzer
+        JWT_SECRET=your_secret_key
+        ```
+    -   **Client**: Create `client/.env` based on `client/.env.example`.
+        ```env
+        VITE_API_BASE_URL=http://localhost:5000
+        ```
 
-Create `.env` in `server/`:
-
-```env
-PORT=5000
-```
-
-Run in development:
-
-```bash
-npm run dev
-```
-
-Backend runs at: `http://localhost:5000`
-
-Test:
-
-```text
-GET http://localhost:5000/api/health
-```
-
-You should see a small JSON health response.
-
-### 3. Frontend Setup
-
-In another terminal:
-
-```bash
-cd client
-npm install
-npm run dev
-```
-
-Frontend runs at: `http://localhost:5173`
+4.  **Run Locally**:
+    Open two terminals:
+    -   Terminal 1 (Server): `cd server && npm run dev`
+    -   Terminal 2 (Client): `cd client && npm run dev`
 
 ---
 
-## 🧪 Usage
+## Deployment (Vercel)
 
-1. Open `http://localhost:5173`
-2. On the landing page, click **"Get Started"** → `/analyze`
-3. Choose **Paste Text** or **Upload File** for your resume:
+The project is structured to be deployed easily on Vercel as two separate projects (or a monorepo).
 
-   * Paste your resume text **or**
-   * Upload a `PDF`, `DOCX`, or `TXT` file
-4. Paste a **full job description** in the JD input on the right
-5. Click **"Analyze Resume"**
-6. Review:
+### 1. Deploy Backend (Server)
+1.  Push your code to GitHub.
+2.  Go to Vercel Dashboard -> **Add New Project**.
+3.  Import the `Resume-ai` repository.
+4.  **Important**: In "Project Settings":
+    -   **Root Directory**: Edit and select `server`.
+5.  **Environment Variables**: Add `MONGO_URI` (use MongoDB Atlas) and `JWT_SECRET`.
+6.  Deploy. Vercel will detect the `api/index.ts` and deploy it as a Serverless Function.
+7.  **Copy the assigned Domain** (e.g., `https://resume-ai-server.vercel.app`).
 
-   * Total ATS Score
-   * Score breakdown chart
-   * Matched & missing skills
-   * Suggestions to improve your resume
+### 2. Deploy Frontend (Client)
+1.  Go to Vercel Dashboard -> **Add New Project**.
+2.  Import the same `Resume-ai` repository.
+3.  **Important**: In "Project Settings":
+    -   **Root Directory**: Edit and select `client`.
+    -   **Framework Preset**: Vite (should auto-detect).
+4.  **Environment Variables**:
+    -   `VITE_API_BASE_URL`: Paste the backend URL from step 1 (e.g., `https://resume-ai-server.vercel.app`).
+5.  Deploy.
 
----
-
-## 🌐 Deployment
-
-You can deploy this with:
-
-* **Backend** → Render / Railway / any Node hosting
-* **Frontend** → Netlify / Vercel / GitHub Pages
-
-### Backend (Render example)
-
-1. Push code to GitHub
-2. On Render:
-
-   * New **Web Service**
-   * Root directory: `server`
-   * Build command: `npm install && npm run build`
-   * Start command: `npm start`
-   * Environment variable: `PORT=10000` (or leave default)
-3. Deploy and note the backend URL (e.g.):
-
-```text
-https://ai-resume-analyzer-backend.onrender.com
-```
-
-### Frontend (Netlify example)
-
-1. In `client/`, create `.env`:
-
-```env
-VITE_API_BASE_URL=https://ai-resume-analyzer-backend.onrender.com
-```
-
-2. Build:
-
-```bash
-cd client
-npm run build
-```
-
-3. On Netlify:
-
-   * New Site → From Git
-   * Base directory: `client`
-   * Build command: `npm run build`
-   * Publish directory: `dist`
-   * Environment variable: `VITE_API_BASE_URL` → your backend URL
-
-4. Deploy and open the Netlify URL.
-
----
-
-## 🛤️ Roadmap / Future Enhancements
-
-* 🔑 Authentication (save multiple resumes & analyses per user)
-* 🧠 LLM integration for:
-
-  * Bullet point rewriting
-  * Tailored summary generation
-  * Deeper semantic match scoring
-* 📊 Resume version comparison
-* ⬇️ Export as PDF / shareable report
-* 🌐 Multi-language support
-
----
-
-## 📸 Screenshots
-
-> *Add screenshots here after deployment, for example:*
-
-* `screenshots/landing.png`
-* `screenshots/analyzer.png`
-* `screenshots/score-breakdown.png`
-
----
-
-## 📜 License
-
-MIT License – feel free to use this project as inspiration or starter code.
+Done! Your AI Resume Analyzer is now live.
