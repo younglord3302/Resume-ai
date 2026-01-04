@@ -1,4 +1,7 @@
-# AI Resume Analyzer
+# AI Powered Resume Analyzer
+
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://resume-ai-phi-two.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An intelligent resume analysis tool that uses AI to score resumes against job descriptions, identifying key strengths and missing keywords to help users improve their ATS (Applicant Tracking System) ranking.
 
